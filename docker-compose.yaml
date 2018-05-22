@@ -13,7 +13,10 @@ services:
      - SINGLE=varnish
      - VARNISH_OPTS=-n /var/lib/varnish -T :6082
     volumes:
-     - ./vsl:/var/lib/varnish
+     - workdir:/var/lib/varnish
+     - ./conf/etc/varnish:/etc/varnish
+
+
   hitch:
     container_name: varnish-hitch
     image: "tstrohmeier/gquintard-varnish-docker"
@@ -25,6 +28,8 @@ services:
     environment:
      - SINGLE=hitch
      - HITCH_OPTS=
+
+
   agent:
     container_name: varnish-agent
     image: "tstrohmeier/gquintard-varnish-docker"
@@ -38,7 +43,8 @@ services:
      - AGENT_OPTS=-n /var/lib/varnish -T varnish:6082
      - STAT_OPTS=-n /var/lib/varnish
     volumes:
-     - ./vsl:/var/lib/varnish
+     - workdir:/var/lib/varnish
+     - ./conf/etc/varnish/:/etc/varnish/
 
 
 volumes:
