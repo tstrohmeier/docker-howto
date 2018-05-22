@@ -2,23 +2,35 @@ version: '2'
 
 services:
   varnish:
-    image: "full-install"  
+    container_name: varnish-varnish
+    image: "tstrohmeier/gquintard-varnish-docker"
+    build:
+      context: ./
+      dockerfile: Dockerfile
     ports:
      - "1080:80"
     environment:
      - SINGLE=varnish
      - VARNISH_OPTS=-n /var/lib/varnish -T :6082
     volumes:
-     - workdir:/var/lib/varnish
+     - ./vsl:/var/lib/varnish
   hitch:
-    image: "full-install"
+    container_name: varnish-hitch
+    image: "tstrohmeier/gquintard-varnish-docker"
+    build:
+      context: ./
+      dockerfile: Dockerfile
     ports:
      - "1443:443"
     environment:
      - SINGLE=hitch
      - HITCH_OPTS=
   agent:
-    image: "full-install"
+    container_name: varnish-agent
+    image: "tstrohmeier/gquintard-varnish-docker"
+    build:
+      context: ./
+      dockerfile: Dockerfile
     ports:
      - "1085:6085"
     environment:
@@ -26,7 +38,7 @@ services:
      - AGENT_OPTS=-n /var/lib/varnish -T varnish:6082
      - STAT_OPTS=-n /var/lib/varnish
     volumes:
-     - workdir:/var/lib/varnish
+     - ./vsl:/var/lib/varnish
 
 
 volumes:
