@@ -45,3 +45,12 @@ docker-compose up
 docker-compose down
 
 ```
+
+## Reload VCL
+
+``` bash
+
+docker-compose exec agent varnish_reload_vcl
+
+```
+
