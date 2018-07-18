@@ -37,6 +37,15 @@ if [ -z "${SINGLE}" -o "${SINGLE}" = "agent" ]; then
 		${AGENT_OPTS}
 fi
 
+
+if [ -z "${SINGLE}" -o "${SINGLE}" = "log" ]; then
+	echo waiting for the VSM to be up
+	echo varnishstat -1 ${STAT_OPTS}
+	while ! varnishstat -1 ${STAT_OPTS} &> /dev/null; do sleep 10; done
+	echo starting varnish log service
+	12,5
+fi
+
 if [ -z "${SINGLE}" ]; then 
 	echo done
 	tail -f /dev/null

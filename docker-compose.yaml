@@ -47,6 +47,28 @@ services:
      - ./conf/etc/varnish/:/etc/varnish/
 
 
+  log:
+    container_name: varnish-log
+    image: "tstrohmeier/gquintard-varnish-docker"
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    environment:
+      - SINGLE=log
+      - STAT_OPTS=-n /var/lib/varnish
+####### Default log (backend & frontend)
+#      - LOG_OPTS=-n /var/lib/varnish
+####### Log only backend requests #######
+      - LOG_OPTS=-n /var/lib/varnish -b
+####### Log only client requests #######
+#      - LOG_OPTS=-n /var/lib/varnish -c
+    volumes:
+      - workdir:/var/lib/varnish
+      - ./conf/etc/varnish/:/etc/varnish/
+    depends_on:
+      - varnish
+
+
 volumes:
   workdir:
     driver: local
