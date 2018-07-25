@@ -14,6 +14,10 @@ docker pull tstrohmeier/gquintard-varnish:latest
 
 ## What is installed in this image?
 * varnish
+* hitch
+
+## What is installed in the dockerfile?
+* varnish
 * hitch: used to provide an endpoint with ssl
 * stunnel: used in clientmode for backend endpoints with ssl or more then one IP
 * socat: used for debugging the backend requests
