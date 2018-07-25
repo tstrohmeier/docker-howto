@@ -1,7 +1,7 @@
 # gquintard-varnish-docker
 Dockerfile for the tstrohmeier/gquintard-varnish image
 
-I use this image if I want to work in a local env.
+I use this image for local VCL development and testing. 
 
 @Dockerhub: https://hub.docker.com/r/tstrohmeier/gquintard-varnish/
 
@@ -14,7 +14,9 @@ docker pull tstrohmeier/gquintard-varnish:latest
 
 ## What is installed in this image?
 * varnish
-* hitch
+* hitch: used to provide an endpoint with ssl
+* stunnel: used in clientmode for backend endpoints with ssl or more then one IP
+* socat: used for debugging the backend requests
 
 
 # Build

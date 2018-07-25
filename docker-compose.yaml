@@ -15,6 +15,12 @@ services:
     volumes:
       - workdir:/var/lib/varnish
       - ./conf/etc/varnish:/etc/varnish
+    links:
+      - stunnel
+      - socat
+    depends_on:
+      - stunnel
+      - socat
 
 
   hitch:
@@ -45,6 +51,12 @@ services:
     volumes:
       - workdir:/var/lib/varnish
       - ./conf/etc/varnish/:/etc/varnish/
+    links:
+      - stunnel
+      - socat
+    depends_on:
+      - stunnel
+      - socat
 
 
   log:
@@ -65,10 +77,35 @@ services:
     volumes:
       - workdir:/var/lib/varnish
       - ./conf/etc/varnish/:/etc/varnish/
+    links:
+      - stunnel
+      - socat
     depends_on:
       - varnish
+      - stunnel
+      - socat
 
 
+  stunnel:
+    container_name: varnish_stunnel_proxy
+    image: tstrohmeier/stunnel-client
+    restart: always
+    ports:
+      - "8888:8888"
+    environment:
+      - ACCEPT=8888
+      - CONNECT=your.server.com:443
+  socat:
+    container_name: varnish_socat_proxy
+    image: alpine/socat
+    restart: always
+    command: -v tcp-listen:7777,fork,reuseaddr tcp-connect:stunnel:8888
+    ports:
+      - "7777:7777"
+    links:
+      - stunnel
+    depends_on:
+      - stunnel
 volumes:
   workdir:
     driver: local
