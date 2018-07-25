@@ -10,11 +10,11 @@ services:
     ports:
      - "1080:80"
     environment:
-     - SINGLE=varnish
-     - VARNISH_OPTS=-n /var/lib/varnish -T :6082
+      - SINGLE=varnish
+      - VARNISH_OPTS=-n /var/lib/varnish -T :6082
     volumes:
-     - workdir:/var/lib/varnish
-     - ./conf/etc/varnish:/etc/varnish
+      - workdir:/var/lib/varnish
+      - ./conf/etc/varnish:/etc/varnish
 
 
   hitch:
@@ -39,12 +39,12 @@ services:
     ports:
      - "1085:6085"
     environment:
-     - SINGLE=agent
-     - AGENT_OPTS=-n /var/lib/varnish -T varnish:6082
-     - STAT_OPTS=-n /var/lib/varnish
+      - SINGLE=agent
+      - AGENT_OPTS=-n /var/lib/varnish -T varnish:6082
+      - STAT_OPTS=-n /var/lib/varnish
     volumes:
-     - workdir:/var/lib/varnish
-     - ./conf/etc/varnish/:/etc/varnish/
+      - workdir:/var/lib/varnish
+      - ./conf/etc/varnish/:/etc/varnish/
 
 
   log:
